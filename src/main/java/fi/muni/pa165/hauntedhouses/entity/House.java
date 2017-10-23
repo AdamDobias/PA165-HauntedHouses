@@ -1,6 +1,7 @@
 package fi.muni.pa165.hauntedhouses.entity;
 
 import java.util.Date;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -95,19 +96,18 @@ public class House {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
+    public boolean equals(Object object) {
+        if (this == object) {
             return true;
         }
-        if ((obj == null) || !(obj instanceof House)) {
+        if ((object == null) || (getClass() != object.getClass())) {
             return false;
         }
-        House other = (House) obj;
-        if (name == null || address == null) {
-            if ((other.getName() != null) || other.getAddress() != null) {
-                return false;
-            }
-        } else if ((!name.equals(other.getName())) || (!address.equals(other.getAddress()))) {
+        House other = (House) object;
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        if (!Objects.equals(this.address, other.address)) {
             return false;
         }
         return true;
