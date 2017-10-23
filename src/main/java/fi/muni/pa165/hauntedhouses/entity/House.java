@@ -100,7 +100,7 @@ public class House {
         if (this == object) {
             return true;
         }
-        if ((object == null) || (getClass() != object.getClass())) {
+        if ((object == null) || !(object instanceof House)) {
             return false;
         }
         House other = (House) object;
