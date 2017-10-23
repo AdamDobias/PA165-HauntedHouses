@@ -47,6 +47,13 @@ public class House {
     public House(Long houseID) {
         this.id = houseID;
     }
+    
+    public House(String name, String address, Date becameHauntedDate, String history) {
+        this.name = name;
+        this.address = address;
+        this.becameHauntedDate = becameHauntedDate;
+        this.history = history;
+    }
 
     // Setters and getters:
     public void setId(Long houseID) {
