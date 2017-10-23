@@ -99,18 +99,15 @@ public class House {
         if (this == obj) {
             return true;
         }
-        if (obj == null) {
-            return false;
-        }
-        if (!(obj instanceof House)) {
+        if ((obj == null) || !(obj instanceof House)) {
             return false;
         }
         House other = (House) obj;
-        if (name == null) {
-            if (other.getName() != null) {
+        if (name == null || address == null) {
+            if ((other.getName() != null) || other.getAddress() != null) {
                 return false;
             }
-        } else if (!name.equals(other.getName())) {
+        } else if ((!name.equals(other.getName())) || (!address.equals(other.getAddress()))) {
             return false;
         }
         return true;
