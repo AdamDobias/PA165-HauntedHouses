@@ -52,7 +52,4 @@ public interface AbilityDao {
      */
     public List<Ability> findAll();
     
-    
-    
-    
 }

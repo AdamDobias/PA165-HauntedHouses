@@ -56,6 +56,4 @@ public class AbilityDaoImpl implements AbilityDao {
         return em.createQuery("SELECT a FROM Ability a", Ability.class).getResultList();
     }
     
-    
-    
 }

@@ -8,6 +8,7 @@ package fi.muni.pa165.hauntedhouses.entity;
 import fi.muni.pa165.hauntedhouses.enums.AbilityType;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -86,8 +87,30 @@ public class Ability {
         this.ghosts = ghosts;
     }
 
-    
-    
-    
-    
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        return prime + ((type == null) ? 0 : type.hashCode())
+                     + ((name == null) ? 0 : name.hashCode());
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if ((obj == null) || (obj instanceof Ability)) {
+            return false;
+        }
+
+        final Ability other = (Ability) obj;
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        if (this.type != other.type) {
+            return false;
+        }
+        return true;
+    }
+
 }
