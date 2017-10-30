@@ -35,14 +35,11 @@ public class House {
     @Column(nullable = false, unique = true)
     private String address;
 
-    @NotNull
     @Temporal(TemporalType.DATE)
     private Date becameHauntedDate;
 
-    @NotNull
     private String history;
     
-    @NotNull
     private Long ownerID;
     
     @OneToMany

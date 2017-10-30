@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.CascadeType;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -42,14 +43,11 @@ public class Ghost {
     @Column(nullable = false)
     private Date hauntTo;
     
-    @NotNull
     private String description;
     
-    @NotNull
     private String hauntReason;
     
-    @NotNull
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private House house;
     
     @ManyToMany
