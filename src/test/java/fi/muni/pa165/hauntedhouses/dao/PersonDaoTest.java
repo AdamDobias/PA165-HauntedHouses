@@ -34,7 +34,7 @@ import org.testng.annotations.BeforeMethod;
 
 /**
  *
- * @author Dubak
+ * @author Adam Dobiáš, 451044
  */
 @ContextConfiguration(classes = PersistenceApplicationContext.class)
 @TestExecutionListeners(TransactionalTestExecutionListener.class)
