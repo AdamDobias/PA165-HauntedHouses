@@ -7,11 +7,13 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
+import org.springframework.stereotype.Repository;
 
 
 /**
  * @author Marek Bohm, 396257
  */
+@Repository
 public class PersonDaoImpl implements PersonDao {
 
     @PersistenceContext

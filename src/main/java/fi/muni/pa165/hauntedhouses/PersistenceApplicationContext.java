@@ -20,12 +20,23 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 import javax.sql.DataSource;
+import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories
-@ComponentScan(basePackageClasses = {PersonDao.class, AbilityDao.class, GhostDao.class, HouseDao.class})
+@ComponentScan(basePackageClasses = {PersonDao.class, AbilityDao.class, GhostDao.class, HouseDao.class},
+            basePackages = "cz.fi.muni.pa165.")
 public class PersistenceApplicationContext {
+    
+    /**
+     * Enables automatic translation of exceptions to DataAccessExceptions.
+     */
+    @Bean
+    public PersistenceExceptionTranslationPostProcessor postProcessor() {
+        return new PersistenceExceptionTranslationPostProcessor();
+    }
+    
     @Bean
     public JpaTransactionManager transactionManager(){
         return  new JpaTransactionManager(entityManagerFactory().getObject());
