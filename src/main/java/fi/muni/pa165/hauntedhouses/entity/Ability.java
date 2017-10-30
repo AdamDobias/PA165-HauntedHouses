@@ -1,27 +1,27 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fi.muni.pa165.hauntedhouses.entity;
 
-import fi.muni.pa165.hauntedhouses.enums.AbilityType;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
 
+import fi.muni.pa165.hauntedhouses.enums.AbilityType;
+
 /**
- *
  * @author Adam Dobiáš, 451044
  */
+@Entity
 public class Ability {
     
+    @Id
     @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -40,10 +40,6 @@ public class Ability {
 
     // constructor
     public Ability() {
-    }
-
-    public void addGhost(Ghost ghost) {
-        ghosts.add(ghost);
     }
     
     //getters, setters
@@ -85,6 +81,14 @@ public class Ability {
 
     public void setGhosts(Set<Ghost> ghosts) {
         this.ghosts = ghosts;
+    }
+    
+    public void addGhost(Ghost ghost) {
+        ghosts.add(ghost);
+    }
+    
+    public void removeGhost(Ghost ghost) {
+        this.ghosts.remove(ghost);
     }
 
     @Override

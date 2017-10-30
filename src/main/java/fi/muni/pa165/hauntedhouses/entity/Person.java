@@ -1,15 +1,14 @@
 package fi.muni.pa165.hauntedhouses.entity;
 
-
 import fi.muni.pa165.hauntedhouses.enums.Role;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Set;
 
 /**
  * @author Marek Bohm 396257
  */
+@Entity
 public class Person {
 
     @Id
@@ -30,7 +29,8 @@ public class Person {
 
     private String passwordHash;
 
-    private Set<House> houses;
+    @ManyToOne
+    private House house;
 
     // Constructor
     public Person() {
@@ -84,12 +84,12 @@ public class Person {
         this.passwordHash = passwordHash;
     }
 
-    public Set<House> getHouses() {
-        return houses;
+    public House getHouse() {
+        return house;
     }
 
-    public void setHouses(Set<House> houses) {
-        this.houses = houses;
+    public void setHouse(House house) {
+        this.house = house;
     }
 
     @Override

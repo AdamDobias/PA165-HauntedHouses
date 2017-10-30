@@ -23,7 +23,7 @@ import java.util.List;
          * Delete person from database.
          * @param p person to delete.
          */
-        public void delete(Person p);
+        public void remove(Person p);
 
         /**
          * Find person in database by given id.

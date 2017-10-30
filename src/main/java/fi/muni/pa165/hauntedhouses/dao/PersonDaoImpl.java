@@ -28,7 +28,7 @@ public class PersonDaoImpl implements PersonDao {
     }
 
     @Override
-    public void delete(Person p) {
+    public void remove(Person p) {
         em.remove(em.contains(p) ? p : em.merge(p));
     }
 

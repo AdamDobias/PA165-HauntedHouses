@@ -18,6 +18,12 @@ public interface HouseDao {
     public void create(House house);
     
     /**
+     * Updates a house in the database.
+     * @param house the house to be updated
+     */
+    public void update(House house);
+    
+    /**
      * Removes a house.
      * @param house the house to be removed
      */

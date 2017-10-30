@@ -32,6 +32,11 @@ public class HouseDaoImpl implements HouseDao {
     }
     
     @Override
+    public void update(House house) {
+        manager.merge(house);
+    }
+    
+    @Override
     public House findByID(Long id) {
         return manager.find(House.class, id);
     }
