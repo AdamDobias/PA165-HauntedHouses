@@ -1,23 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package fi.muni.pa165.hauntedhouses.dao;
 
 import fi.muni.pa165.hauntedhouses.PersistenceApplicationContext;
 import fi.muni.pa165.hauntedhouses.entity.Person;
 import fi.muni.pa165.hauntedhouses.enums.Role;
 
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
-//import org.junit.After;
-//import org.junit.AfterClass;
-//import org.junit.Before;
-//import org.junit.BeforeClass;
-//import org.junit.Test;
-//import static org.junit.Assert.*;
+
 import static org.assertj.core.api.Assertions.*;
 
 import org.springframework.test.context.ContextConfiguration;
@@ -27,8 +17,6 @@ import org.springframework.test.context.transaction.TransactionalTestExecutionLi
 import org.springframework.transaction.annotation.Transactional;
 
 import org.testng.annotations.Test;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeMethod;
 
 
@@ -62,21 +50,19 @@ public class PersonDaoTest extends AbstractTestNGSpringContextTests {
     }
     
     @Test
-    public void fooTest() {
-
+    public void createTest() {
         assertThat(p1.getId()).isNull();
         assertThat(p2.getId()).isNull();
         
-        int before = personDao.findAll().size();
         personDao.create(p1);
         personDao.create(p2);
         
         assertThat(p1.getId()).isNotNull();
         assertThat(p2.getId()).isNotNull();
         
-        assertThat(p1.getId()).isNotSameAs(p2.getId());
-       
+        assertThat(p1.getId()).isNotSameAs(p2.getId());      
     }
+    
     
     @Test
     public void updateTest() {
@@ -96,18 +82,107 @@ public class PersonDaoTest extends AbstractTestNGSpringContextTests {
         assertThat(n2+"aaa").startsWith(p2.getName()).endsWith(p2.getName());
 
     }   
-    
+   
     @Test
     public void removeTest() {
         
         personDao.create(p1);
         personDao.create(p2);
+
+        personDao.remove(p1);        
         
+        assertThat(personDao.findById(p1.getId())).isNull();
+        assertThat(personDao.findById(p2.getId())).isNotNull(); 
+
+    }
+    
+    @Test
+    public void removeNotInDBTest() {
+        
+        personDao.create(p2);
         personDao.remove(p1);
+        assertThat(personDao.findAll()).containsOnly(p2);
+ 
+    }
+    
+    @Test
+    public void findByIdTest() {
         
+        personDao.create(p1);
+        personDao.create(p2);
         
-        assertThat(personDao.findAll()).doesNotContain(p1);
-        
+        assertThat(personDao.findById(p1.getId()))
+                .isEqualToComparingFieldByField(p1);
         
     }
+
+    
+    @Test
+    public void findByNonExistingIdTest() {
+        
+        assertThat(personDao.findById(Long.MAX_VALUE)).isNull();
+   
+    }
+    
+    @Test
+    public void findRemovedByIdTest() {
+        
+        personDao.create(p1);
+        personDao.create(p2);
+        personDao.remove(p2);
+        
+        assertThat(personDao.findById(p2.getId())).isNull();
+        
+    }
+    
+    @Test
+    public void findPersonByLoginTest() {
+        
+        personDao.create(p1);
+        personDao.create(p2);
+        
+        assertThat(personDao.findPersonByLogin(p1.getLogin()))
+                .isEqualToComparingFieldByField(p1);
+        
+    }
+ 
+    @Test 
+    public void findPersonByNonexistingLoginTest() {
+        
+        assertThat(personDao.findPersonByLogin("a-sdg-df-b-dxf-bcv-sdzfx-cbvdzsxc"))
+                .isNull();
+        
+    }
+    
+    @Test
+    public void findPersonRemovedByLoginTest() {
+        
+        personDao.create(p1);
+        personDao.create(p2);
+        personDao.remove(p2);
+        
+        assertThat(personDao.findPersonByLogin(p2.getLogin())).isNull();
+        
+    }
+    
+    @Test
+    public void findAll() {
+        
+        Person remove = new Person();
+        remove.setName("romie");
+        remove.setSurname("removington");
+        remove.setLogin("rom");
+        remove.setType(Role.RESIDENT);
+        
+        Person notCreated = new Person();
+        
+        personDao.create(p1);
+        personDao.create(p2);
+        personDao.create(remove);
+        assertThat(personDao.findAll()).containsOnly(p1, p2, remove);
+        personDao.remove(remove);
+        assertThat(personDao.findAll()).containsOnly(p1, p2);
+        
+    }
+    
 }

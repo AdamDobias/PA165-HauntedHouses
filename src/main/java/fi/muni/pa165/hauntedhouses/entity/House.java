@@ -56,9 +56,9 @@ public class House {
     }
 
     // Setters and getters:
-    public void setId(Long houseID) {
-        this.id = houseID;
-    }
+//    public void setId(Long houseID) {
+//        this.id = houseID;
+//    }
     
     public Long getId() {
         return id;
