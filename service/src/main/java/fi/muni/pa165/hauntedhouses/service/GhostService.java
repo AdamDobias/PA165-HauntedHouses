@@ -2,6 +2,7 @@ package fi.muni.pa165.hauntedhouses.service;
 
 import fi.muni.pa165.hauntedhouses.entity.Ability;
 import fi.muni.pa165.hauntedhouses.entity.Ghost;
+import fi.muni.pa165.hauntedhouses.entity.House;
 import java.util.List;
 import org.springframework.dao.DataAccessException;
 
@@ -74,7 +75,7 @@ public interface GhostService {
      * @param ghost to which bility will be given
      * @param ability which will be granted
      * @throws DataAccessException in case of any failure on persistence layer
-     * @throws IllegalArgumentException if ghost or ability are null
+     * @throws IllegalArgumentException if ghost or ability are null or not in DB
      */
     void giveAbility(Ghost ghost, Ability ability) throws DataAccessException, IllegalArgumentException;
     
@@ -83,8 +84,26 @@ public interface GhostService {
      * @param ghost from which ability will be removed
      * @param ability which will be removed
      * @throws DataAccessException in case of any failure on persistence layer
-     * @throws IllegalArgumentException if ghost or ability are null
+     * @throws IllegalArgumentException if ghost or ability are null or not in DB
      */
     void removeAbility(Ghost ghost, Ability ability)  throws DataAccessException, IllegalArgumentException;
+    
+    /**
+     * ghost's house will be CHANGED
+     * @param house house where ghost should haunt
+     * @param ghost ghost which should be haunting
+     * @throws DataAccessException in case of any failure on persistence layer
+     * @throws IllegalArgumentException if ghost or house are null or not in DB
+     */
+    void hauntHouse(House house, Ghost ghost) throws DataAccessException, IllegalArgumentException;
+    
+    /**
+     * 
+     * @param ghost ghost of concern
+     * @return true if is currently haunting, false otherwise
+     * @throws DataAccessException in case of any failure on persistence layer
+     * @throws IllegalArgumentException if ghost is null or not in DB
+     */
+    boolean isGhostHaunting(Ghost ghost) throws DataAccessException, IllegalArgumentException;
     
 }

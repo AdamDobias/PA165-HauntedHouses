@@ -43,7 +43,7 @@ public interface HouseService {
      * @param id by which to search
      * @return house with given id
      * @throws DataAccessException in case of any failure on persistence layer
-     * @throws IllegalArgumentException if id is null
+     * @throws IllegalArgumentException if id is null or not in DB
      */
     House findById(Long id) throws DataAccessException, IllegalArgumentException;
     
@@ -51,7 +51,7 @@ public interface HouseService {
      * 
      * @param house new state of the house
      * @throws DataAccessException in case of any failure on persistence layer
-     * @throws IllegalArgumentException if house is null
+     * @throws IllegalArgumentException if house is nullor not in DB
      */
     void updateHouse(House house) throws DataAccessException, IllegalArgumentException;
     
@@ -59,7 +59,7 @@ public interface HouseService {
      * 
      * @param house to be deleted
      * @throws DataAccessException in case of any failure on persistence layer
-     * @throws IllegalArgumentException if house is null
+     * @throws IllegalArgumentException if house is null or not in DB
      */
     void deleteHouse(House house) throws DataAccessException, IllegalArgumentException;
     
@@ -67,39 +67,66 @@ public interface HouseService {
      * 
      * @param house to be created
      * @throws DataAccessException in case of any failure on persistence layer
-     * @throws IllegalArgumentException if house is null
+     * @throws IllegalArgumentException if house is null or not in DB
      */
     void createHouse(House house) throws DataAccessException, IllegalArgumentException;
     
-    /**
-     * ghost's house will be CHANGED
-     * @param house house where ghost should be assigned
-     * @param ghost ghost which should be assigned
-     * @throws DataAccessException in case of any failure on persistence layer
-     * @throws IllegalArgumentException if ghost or house are null
-     */
-    void assignGhostToHouse(House house, Ghost ghost) throws DataAccessException, IllegalArgumentException;
 
     /**
-     * person's house will be CHANGED
-     * @param house to where person will be living
-     * @param person person which moves in
-     * @throws DataAccessException  in case of any failure on persistence layer
-     * @throws IllegalArgumentException if house or person is null
+     * this has been moved to GhostService under name hauntHouse
      */
-    void addNewTenant(House house, Person person)  throws DataAccessException, IllegalArgumentException;
+    //void assignGhostToHouse(House house, Ghost ghost) throws DataAccessException, IllegalArgumentException;
 
     
-    /* these methods should perhaps be a part of facade layer?
+    /**
+     * this has been moved to PersonService under name inhabitHouse
+    */
+    //void addNewTenant(House house, Person person)  throws DataAccessException, IllegalArgumentException;
+    
+    /**
+     * 
+     * @param house house of concern
+     * @return true if is hounted, false otherwise
+     * @throws DataAccessException in case of any failure on persistence layer
+     * @throws IllegalArgumentException if house is null or not in DB
+     */
     boolean isHouseHaunted(House house)  throws DataAccessException, IllegalArgumentException;
     
+    /**
+     * 
+     * @param house house of concern
+     * @return true if has tenants, false otherwise
+     * @throws DataAccessException in case of any failure on persistence layer
+     * @throws IllegalArgumentException if house is null or not in DB
+     */
     boolean isOccupated(House house) throws DataAccessException, IllegalArgumentException;
 
+    /**
+     * 
+     * @param house house of concern
+     * @return list of ghosts haunting in this house
+     * @throws DataAccessException in case of any failure on persistence layer
+     * @throws IllegalArgumentException if house is null or not in DB
+     */
     List<Ghost> getGhosts(House house)  throws DataAccessException, IllegalArgumentException;
     
+    /**
+     * 
+     * @param house of concern
+     * @return list of people living in the house
+     * @throws DataAccessException in case of any failure on persistence layer
+     * @throws IllegalArgumentException if house is null or not in DB 
+     */
     List<Person> getInhabitants(House house)  throws DataAccessException, IllegalArgumentException;
     
+    /**
+     * 
+     * @param house of concern
+     * @return Person, which is owning the house
+     * @throws DataAccessException in case of any failure on persistence layer
+     * @throws IllegalArgumentException if house is null or not in DB 
+     */
     Person getOwner(House house)  throws DataAccessException, IllegalArgumentException;
-    */
+   
     
 }
