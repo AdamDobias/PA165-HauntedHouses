@@ -29,11 +29,11 @@ public interface AbilityService {
     /**
      * 
      * @param name by which to search
-     * @return List of all abilities matching given name
+     * @return ability matching given name
      * @throws DataAccessException in case of any failure on persistence layer
      * @throws IllegalArgumentException if name is null or empty string
      */
-    List<Ability> findByName(String name) throws DataAccessException, IllegalArgumentException;
+    Ability findByName(String name) throws DataAccessException, IllegalArgumentException;
     
     /**
      * 

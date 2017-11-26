@@ -23,16 +23,16 @@ public interface HouseService {
     /**
      * 
      * @param name by which to find
-     * @return list of all houses with matching name
+     * @return house with matching name
      * @throws DataAccessException in case of any failure on persistence layer
      * @throws IllegalArgumentException if name is null or empty
      */
-    List<House> findByName(String name) throws DataAccessException, IllegalArgumentException;
+    House findByName(String name) throws DataAccessException, IllegalArgumentException;
     
     /**
      * 
      * @param adress by which to search
-     * @return house on this address
+     * @return house on this address, null if not found
      * @throws DataAccessException in case of any failure on persistence layer
      * @throws IllegalArgumentException  if adress is null or empty
      */

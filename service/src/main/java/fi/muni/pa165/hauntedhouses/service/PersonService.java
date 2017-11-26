@@ -34,7 +34,6 @@ public interface PersonService {
      * 
      * @return List of Person entities, null if empty
      * @throws DataAccessException in case on any failure on persistence layer
-     * @throws IllegalArgumentException if person is null
      */
     List<Person> getAllPeople() throws DataAccessException;
     
