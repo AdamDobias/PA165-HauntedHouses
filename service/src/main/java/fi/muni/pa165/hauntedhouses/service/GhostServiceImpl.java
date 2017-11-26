@@ -11,11 +11,13 @@ import java.util.Date;
 import java.util.List;
 import javax.inject.Inject;
 import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Service;
 
 /**
  *
- * @author Adam Dobiáš
+ * @author Adam Dobias
  */
+@Service
 public class GhostServiceImpl implements GhostService{
 
     @Inject
@@ -115,7 +117,7 @@ public class GhostServiceImpl implements GhostService{
         if (ghost == null || ghostDao.findById(ghost.getId()) == null) {
             throw new IllegalArgumentException("ghost must be in the database and must not be null");
         }
-        if (house == null || ghostDao.findById(house.getId()) == null) {
+        if (house == null || houseDao.findByID(house.getId()) == null) {
             throw new IllegalArgumentException("house must be in the database and must not be null");
         }
         ghost.setHouse(house);

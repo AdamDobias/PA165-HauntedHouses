@@ -5,11 +5,13 @@ import fi.muni.pa165.hauntedhouses.entity.Ghost;
 import fi.muni.pa165.hauntedhouses.entity.House;
 import java.util.List;
 import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Service;
 
 /**
  *
- * @author Adam Dobiáš
+ * @author Adam Dobias
  */
+@Service
 public interface GhostService {
     
     /**

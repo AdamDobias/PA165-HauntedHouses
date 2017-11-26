@@ -14,11 +14,13 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.inject.Inject;
 import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Service;
 
 /**
  *
- * @author Adam Dobiáš
+ * @author Adam Dobias
  */
+@Service
 public class PersonServiceImpl implements PersonService{
 
     @Inject

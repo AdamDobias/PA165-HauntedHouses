@@ -6,11 +6,13 @@ import fi.muni.pa165.hauntedhouses.entity.Person;
 import fi.muni.pa165.hauntedhouses.enums.Role;
 import java.util.List;
 import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Service;
 
 /**
  *
- * @author Adam Dobiáš
+ * @author Adam Dobias
  */
+@Service
 public interface PersonService {
     
     /**
