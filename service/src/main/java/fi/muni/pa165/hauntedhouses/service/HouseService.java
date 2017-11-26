@@ -9,7 +9,7 @@ import org.springframework.dao.DataAccessException;
 
 /**
  *
- * @author Adam Dobi�
+ * @author Adam Dobiáš
  */
 public interface HouseService {
     
@@ -28,6 +28,7 @@ public interface HouseService {
      * @throws IllegalArgumentException if name is null or empty
      */
     House findByName(String name) throws DataAccessException, IllegalArgumentException;
+
     
     /**
      * 

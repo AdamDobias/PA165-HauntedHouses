@@ -9,7 +9,7 @@ import org.springframework.dao.DataAccessException;
 
 /**
  *
- * @author Adam Dobi�
+ * @author Adam Dobiáš
  */
 public interface PersonService {
     

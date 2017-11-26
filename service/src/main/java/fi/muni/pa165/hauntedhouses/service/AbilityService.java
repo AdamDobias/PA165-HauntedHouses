@@ -6,7 +6,7 @@ import org.springframework.dao.DataAccessException;
 
 /**
  *
- * @author Adam Dobi�
+ * @author Adam Dobiáš
  */
 public interface AbilityService {
     
@@ -34,6 +34,7 @@ public interface AbilityService {
      * @throws IllegalArgumentException if name is null or empty string
      */
     Ability findByName(String name) throws DataAccessException, IllegalArgumentException;
+
     
     /**
      * 
