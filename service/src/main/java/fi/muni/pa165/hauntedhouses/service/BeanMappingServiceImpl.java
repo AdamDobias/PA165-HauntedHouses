@@ -10,11 +10,13 @@ import java.util.Collection;
 import java.util.List;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author Adam Dobias
  */
+@Service
 public class BeanMappingServiceImpl {
     
     @Autowired

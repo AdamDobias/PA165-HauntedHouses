@@ -41,6 +41,7 @@ public class PersonServiceImpl implements PersonService{
         if (p == null) {
             throw new IllegalArgumentException("cannot remove null person");
         }
+        personDao.remove(p);
     }
 
     @Override

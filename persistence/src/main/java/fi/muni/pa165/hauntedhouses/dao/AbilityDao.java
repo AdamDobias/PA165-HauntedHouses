@@ -5,7 +5,7 @@ import fi.muni.pa165.hauntedhouses.entity.Ability;
 import java.util.List;
 
 /**
- * @author Adam Dobiáš, 451044
+ * @author Adam Dobias, 451044
  */
 
 public interface AbilityDao {
