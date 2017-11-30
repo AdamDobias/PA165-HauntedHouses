@@ -1,5 +1,7 @@
 package fi.muni.pa165.hauntedhouses.service;
 
+
+import fi.muni.pa165.hauntedhouses.dao.AbilityDao;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -19,10 +21,14 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import fi.muni.pa165.hauntedhouses.dao.GhostDao;
+import fi.muni.pa165.hauntedhouses.dao.HouseDao;
 import fi.muni.pa165.hauntedhouses.entity.Ability;
 import fi.muni.pa165.hauntedhouses.entity.Ghost;
 import fi.muni.pa165.hauntedhouses.entity.House;
+import fi.muni.pa165.hauntedhouses.entity.Person;
 import fi.muni.pa165.hauntedhouses.enums.AbilityType;
+import java.util.Collection;
+import java.util.Objects;
 /**
  * 
  * @author Mario Majernik, 422165
@@ -31,6 +37,12 @@ import fi.muni.pa165.hauntedhouses.enums.AbilityType;
 public class GhostServiceTest extends AbstractServiceTest{
 	@Mock
 	private GhostDao ghostDao;
+        
+        @Mock
+        private AbilityDao abilityDao;
+        
+        @Mock
+        private HouseDao houseDao;
 	
 	@InjectMocks
 	@Autowired
@@ -42,6 +54,7 @@ public class GhostServiceTest extends AbstractServiceTest{
 	private Ability ability;
 	
 	private Set<Ability> setOfAbilities;
+        private List<House> listOfHouses;
 	private House house1;
 	private House house2;
 	
@@ -68,6 +81,11 @@ public class GhostServiceTest extends AbstractServiceTest{
 		house2 = new House();
 		house2.setAddress("Pretty street");
 		house2.setName("Her house");
+                
+                listOfHouses = new ArrayList<>();
+                listOfHouses.add(house1);
+                listOfHouses.add(house2);
+                
 		
 		ghost1 = new Ghost();
 		ghost1.setName("Witch");
@@ -155,20 +173,34 @@ public class GhostServiceTest extends AbstractServiceTest{
     
     @Test
     public void giveAbilityToGhostTest() {
+        when(ghostDao.findById(ghost1.getId())).thenReturn(ghost1);
+        when(abilityDao.findById(ability.getId())).thenReturn(ability);
     	ghostService.giveAbility(ghost1, ability);
-    	verify(ghostDao).findById(ghost1.getId()).addAbility(ability);
+        assertThat(ghost1.getAbilities()).contains(ability);
+        assertThat(ability.getGhosts()).contains(ghost1);
+    	//verify(ghostDao).findById(ghost1.getId()).addAbility(ability);
     }
-    
+
     @Test
     public void removeAbilityFromGhostTest() {
+        when(ghostDao.findById(ghost1.getId())).thenReturn(ghost1);
+        when(abilityDao.findById(ability.getId())).thenReturn(ability);
     	ghostService.removeAbility(ghost1, ability);
-    	verify(ghostDao).findById(ghost1.getId()).removeAbility(ability);
+        assertThat(ghost1.getAbilities()).doesNotContain(ability);
+        assertThat(ability.getGhosts()).doesNotContain(ghost1);
+    	//verify(ghostDao).findById(ghost1.getId())/*.removeAbility(ability)*/;
     }
     
     @Test
     public void hauntHouseTest() {
+        when(ghostDao.findById(ghost1.getId())).thenReturn(ghost1);
+        when(houseDao.findByID(house2.getId())).thenReturn(house2);    
+        House oldHouse = ghost1.getHouse();
     	ghostService.hauntHouse(house2, ghost1);
-    	verify(ghostDao).findById(ghost1.getId()).setHouse(house2);
+        assertThat(ghost1.getHouse()).isEqualToComparingFieldByField(house2);
+        assertThat(house2.getGhosts()).contains(ghost1);
+        assertThat(oldHouse.getGhosts()).doesNotContain(ghost1);
+    	//verify(ghostDao).findById(ghost1.getId()).setHouse(house2);
     }
 
     @Test
@@ -196,5 +228,6 @@ public class GhostServiceTest extends AbstractServiceTest{
     	ghostService.deleteGhost(ghost1);
     	verify(ghostDao).remove(ghost1);
     }
+
 	
 }

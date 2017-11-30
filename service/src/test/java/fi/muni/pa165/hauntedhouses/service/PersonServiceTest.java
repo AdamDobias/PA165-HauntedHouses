@@ -1,5 +1,6 @@
 package fi.muni.pa165.hauntedhouses.service;
 
+import fi.muni.pa165.hauntedhouses.dao.HouseDao;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -28,7 +29,11 @@ import fi.muni.pa165.hauntedhouses.enums.Role;
 public class PersonServiceTest extends AbstractServiceTest{
 	@Mock
 	private PersonDao personDao;
-	
+        
+	@Mock
+	private HouseDao houseDao;
+        
+        
 	@InjectMocks
 	@Autowired
 	private PersonServiceImpl personService;
@@ -130,7 +135,11 @@ public class PersonServiceTest extends AbstractServiceTest{
     
     @Test
     public void inhabitHouseTest() {
+        when(personDao.findById(person1.getId())).thenReturn(person1);
+        when(houseDao.findByID(house.getId())).thenReturn(house); 
     	personService.inhabitHouse(house, person1);
-    	verify(personDao).findById(person1.getId()).setHouse(house);
+        assertThat(person1.getHouse()).isEqualToComparingFieldByField(house);
+        assertThat(house.getResidents()).contains(person1);
+    	//verify(personDao).findById(person1.getId()).setHouse(house);
     }
 }

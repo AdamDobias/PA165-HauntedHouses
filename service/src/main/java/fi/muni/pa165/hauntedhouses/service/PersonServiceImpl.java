@@ -104,6 +104,7 @@ public class PersonServiceImpl implements PersonService{
             throw new IllegalArgumentException("house must be in database and must not be null");
         }
         person.setHouse(house);
+        house.addResident(person);
     }
     
     private static String createHash(String password) {
