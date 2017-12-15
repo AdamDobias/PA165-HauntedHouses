@@ -101,6 +101,9 @@ public class GhostServiceImpl implements GhostService {
         }
         ghost.addAbility(ability);
         ability.addGhost(ghost);
+        //not sure if both needed
+        ghostDao.update(ghost);
+        abilityDao.update(ability);
     }
 
     @Override
@@ -113,7 +116,8 @@ public class GhostServiceImpl implements GhostService {
         }
         ghost.removeAbility(ability);
         ability.removeGhost(ghost);
-        //ghostDao.update(ghost);
+        ghostDao.update(ghost);
+        abilityDao.update(ability);
     }
 
     @Override
@@ -124,9 +128,13 @@ public class GhostServiceImpl implements GhostService {
         if (house == null || houseDao.findByID(house.getId()) == null) {
             throw new IllegalArgumentException("The house must be present in the database and cannot be null!");
         }
-        ghost.getHouse().removeGhost(ghost);
+        House oldHouse = ghost.getHouse();
+        oldHouse.removeGhost(ghost);
         ghost.setHouse(house);
         house.addGhost(ghost);
+        houseDao.update(oldHouse);
+        houseDao.update(house);
+        ghostDao.update(ghost);
     }
 
     @Override
