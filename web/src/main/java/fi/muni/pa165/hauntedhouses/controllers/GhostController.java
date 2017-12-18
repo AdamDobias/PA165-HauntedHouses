@@ -83,39 +83,39 @@ public class GhostController {
         }
     }
 
-//    @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-//    @ResponseStatus(HttpStatus.CREATED)
-//    public final void giveAbilityToGhost(@Valid @RequestBody AbilityDTO ability, BindingResult result,
-//            @PathVariable(ApiContract.Ghost.PATH_ID) long id) {
-//        if (result.hasErrors()) {
-//            throw new ResourceNotValid();
-//        }
-//
-//        try {
-//            ghostFacade.giveAbility(ghostFacade.findById(id), ability);
-//        } catch (DataAccessException exception) {
-//            throw new ResourceConflict();
-//        } catch (IllegalArgumentException exception) {
-//            throw new ResourceNotFound();
-//        }
-//    }
+    @RequestMapping(value = ApiContract.Ghost.ABILITIES, method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.CREATED)
+    public final void giveAbilityToGhost(@Valid @RequestBody AbilityDTO ability, BindingResult result,
+            @PathVariable(ApiContract.Ghost.PATH_ID) long id) {
+        if (result.hasErrors()) {
+            throw new ResourceNotValid();
+        }
 
-//    @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-//    @ResponseStatus(HttpStatus.CREATED)
-//    public final void removeAbilityFromGhost(@Valid @RequestBody AbilityDTO ability, BindingResult result,
-//            @PathVariable(ApiContract.Ghost.PATH_ID) long id) {
-//        if (result.hasErrors()) {
-//            throw new ResourceNotValid();
-//        }
-//
-//        try {
-//            ghostFacade.removeAbility(ghostFacade.findById(id), ability);
-//        } catch (DataAccessException exception) {
-//            throw new ResourceConflict();
-//        } catch (IllegalArgumentException exception) {
-//            throw new ResourceNotFound();
-//        }
-//    }
+        try {
+            ghostFacade.giveAbility(ghostFacade.findById(id), ability);
+        } catch (DataAccessException exception) {
+            throw new ResourceConflict();
+        } catch (IllegalArgumentException exception) {
+            throw new ResourceNotFound();
+        }
+    }
+
+    @RequestMapping(value = ApiContract.Ghost.ID, method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.CREATED)
+    public final void removeAbilityFromGhost(@Valid @RequestBody AbilityDTO ability, BindingResult result,
+            @PathVariable(ApiContract.Ghost.PATH_ID) long id) {
+        if (result.hasErrors()) {
+            throw new ResourceNotValid();
+        }
+
+        try {
+            ghostFacade.removeAbility(ghostFacade.findById(id), ability);
+        } catch (DataAccessException exception) {
+            throw new ResourceConflict();
+        } catch (IllegalArgumentException exception) {
+            throw new ResourceNotFound();
+        }
+    }
 
     @RequestMapping(value = ApiContract.Ghost.HOUSE, method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public final void setGhostToHauntInHouse(@Valid @RequestBody HouseDTO house, BindingResult result,

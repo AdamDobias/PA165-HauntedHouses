@@ -1,7 +1,7 @@
 package fi.muni.pa165.hauntedhouses.controllers;
 
 import fi.muni.pa165.hauntedhouses.ApiContract;
-//import fi.muni.pa165.hauntedhouses.dto.HouseDTO;
+import fi.muni.pa165.hauntedhouses.dto.HouseDTO;
 import fi.muni.pa165.hauntedhouses.dto.PersonDTO;
 import fi.muni.pa165.hauntedhouses.exceptions.ResourceConflict;
 import fi.muni.pa165.hauntedhouses.exceptions.ResourceNotFound;
@@ -68,7 +68,7 @@ public class PersonController {
         }
     }
 
-    @RequestMapping(value = ApiContract.Person.ID, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = ApiContract.Person.LOGIN, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public final PersonDTO getPersonByLogin(@PathVariable(ApiContract.Person.PATH_ID) String login) {
         PersonDTO person = personFacade.findPersonByLogin(login);
         if (person != null) {
@@ -78,15 +78,16 @@ public class PersonController {
         }
     }
 
-//    @RequestMapping(value = ApiContract.Person.ID, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-//    public final List<PersonDTO> getPersonByName(@PathVariable(ApiContract.Person.PATH_ID) String name) {
-//        List<PersonDTO> people = personFacade.findPersonByName(name);
-//        if (people == null) {
-//            people = Collections.emptyList();
-//        }
-//        return people;
-//    }
-    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = ApiContract.Person.NAME, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public final List<PersonDTO> getPersonByName(@PathVariable(ApiContract.Person.PATH_ID) String name) {
+        List<PersonDTO> people = personFacade.findPersonByName(name);
+        if (people == null) {
+            people = Collections.emptyList();
+        }
+        return people;
+    }
+    
+    @RequestMapping(value = ApiContract.Person.PEOPLE, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public final List<PersonDTO> getAllPeople() {
         List<PersonDTO> people = personFacade.getAllPeople();
         if (people == null) {
@@ -95,19 +96,20 @@ public class PersonController {
         return people;
     }
 
-//    @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-//    @ResponseStatus(HttpStatus.CREATED)
-//    public final void inhabitHouse(@Valid @RequestBody HouseDTO house, PersonDTO person, BindingResult result) {
-//        if (result.hasErrors()) {
-//            throw new ResourceNotValid();
-//        }
-//
-//        try {
-//            personFacade.inhabitHouse(house, person);
-//        } catch (DataAccessException exception) {
-//            throw new ResourceConflict();
-//        } catch (IllegalArgumentException exception) {
-//            throw new ResourceNotFound();
-//        }
-//    }
+    @RequestMapping(value = ApiContract.Person.PEOPLE, method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.CREATED)
+    public final void inhabitHouse(@Valid @RequestBody HouseDTO house, PersonDTO person, BindingResult result) {
+        if (result.hasErrors()) {
+            throw new ResourceNotValid();
+        }
+
+        try {
+            personFacade.inhabitHouse(house, person);
+        } catch (DataAccessException exception) {
+            throw new ResourceConflict();
+        } catch (IllegalArgumentException exception) {
+            throw new ResourceNotFound();
+        }
+    }
+    
 }
