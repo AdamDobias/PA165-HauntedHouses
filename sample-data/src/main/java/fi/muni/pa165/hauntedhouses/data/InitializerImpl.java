@@ -53,14 +53,9 @@ public class InitializerImpl implements Initializer {
     }
     
     private void createAbilities() {
-        String descriptionBlood = "This ability causes feelings similar to blood burning.";
-        createAbility("Blood burning", descriptionBlood, AbilityType.FIRE);
-        
-        String descriptionConfusion = "The victim loses sense of the current situation.";
-        createAbility("Confusion", descriptionConfusion, AbilityType.CHASE);
-        
-        String descriptionShadows = "This castes shadows into the surroundings.";
-        createAbility("Shadows", descriptionShadows, AbilityType.DARKNESS);
+        createAbility("Blood burning", "This awful ability causes feelings similar to blood burning.", AbilityType.FIRE);
+        createAbility("Confusion", "The victim of this horrible ability loses sense of the current situation.", AbilityType.CHASE);
+        createAbility("Shadows", "This terrible ability allows its master to cast shadows into the surroundings.", AbilityType.DARKNESS);
     }
     
     private void createAbility(String name, String description, AbilityType type) {
@@ -74,16 +69,25 @@ public class InitializerImpl implements Initializer {
     }
     
     private void createHouses() {
-        createHouse("The Hovel", "Bloodcurdling 666");
-        createHouse("The Abandoned Factory", "Nightmarish 13");
-        createHouse("The Lair", "Mad Street 21");
+        Calendar becameHauntedDate = Calendar.getInstance();
+        becameHauntedDate.set(1762, 11, 24, 0, 0);
+        
+        createHouse("The Hovel", "Bloodcurdling 666", becameHauntedDate.getTime(), "The hovel is an awful home of witches and their helpers.");
+        
+        becameHauntedDate.set(1992, 4, 13, 0, 0);
+        createHouse("The Abandoned Factory", "Nightmarish 13", becameHauntedDate.getTime(), "The abandoned factory serves as home of all zombies and vampires, who often fight with each other.");
+        
+        becameHauntedDate.set(1806, 7, 20, 0, 0);
+        createHouse("The Lair", "Mad Street 21", becameHauntedDate.getTime(), "The lair is a dirty and stinking home of all werewolves and other shapeshifters.");
     }
     
-    private void createHouse(String name, String address) {
+    private void createHouse(String name, String address, Date becameHauntedDate, String history) {
         House house = new House();
         
         house.setName(name);
         house.setAddress(address);
+        house.setBecameHauntedDate(becameHauntedDate);
+        house.setHistory(history);
         
         houseService.createHouse(house);
     }
@@ -96,42 +100,60 @@ public class InitializerImpl implements Initializer {
         House abandonedFactory = houseService.findByName("The Abandoned Factory");
         House lair = houseService.findByName("The Lair");
         
+        // Create a zombie:
         Set<Ability> zombieAbilities = new HashSet();
         zombieAbilities.add(abilityService.findByName("Confusion"));
         
         from.set(from.get(Calendar.YEAR), from.get(Calendar.MONTH), from.get(Calendar.DAY_OF_MONTH), 3, 0);
         to.set(to.get(Calendar.YEAR), to.get(Calendar.MONTH), to.get(Calendar.DAY_OF_MONTH), 13, 0);
-        String zombieDescription = "An undead created through the reanimation of a human corpse.";
-        createGhost("Zombie", from.getTime(), to.getTime(), zombieDescription, abandonedFactory, zombieAbilities);
         
+        String zombieDescription = "An undead created through the reanimation of a human corpse.";
+        String zombieHauntReason = "A zombie's purpose of life is to kill as many people as possible.";
+        
+        createGhost("Zombie", from.getTime(), to.getTime(), zombieDescription, zombieHauntReason, abandonedFactory, zombieAbilities);
+        
+        // Create a witch:
         Set<Ability> witchAbilities = new HashSet();
         witchAbilities.add(abilityService.findByName("Blood burning"));
         witchAbilities.add(abilityService.findByName("Shadows"));
+        
         from.set(from.get(Calendar.YEAR), from.get(Calendar.MONTH), from.get(Calendar.DAY_OF_MONTH), 8, 0);
         to.set(to.get(Calendar.YEAR), to.get(Calendar.MONTH), to.get(Calendar.DAY_OF_MONTH), 22, 0);
-        String witchDescription = "A woman practicing black witchcraft with the aid of a devil.";
-        createGhost("Witch", from.getTime(), to.getTime(), witchDescription, hovel, witchAbilities);
         
+        String witchDescription = "A woman practicing black witchcraft with the aid of a devil.";
+        String witchHauntReason = "A witch needs humans to perform her magic.";
+        createGhost("Witch", from.getTime(), to.getTime(), witchDescription, witchHauntReason, hovel, witchAbilities);
+        
+        // Create a werewolf:
         from.set(from.get(Calendar.YEAR), from.get(Calendar.MONTH), from.get(Calendar.DAY_OF_MONTH), 0, 0);
         to.set(to.get(Calendar.YEAR), to.get(Calendar.MONTH), to.get(Calendar.DAY_OF_MONTH), 5, 0);
-        String werewolfDescription = "A human with the ability to shapeshift into a wolf.";
-        createGhost("Werewolf", from.getTime(), to.getTime(), werewolfDescription, lair, Collections.EMPTY_SET);
         
+        String werewolfDescription = "A human with the ability to shapeshift into a wolf.";
+        String werewolfHauntReason = "A werewolf cannot control his aggresiveness.";
+        
+        createGhost("Werewolf", from.getTime(), to.getTime(), werewolfDescription, werewolfHauntReason, lair, Collections.EMPTY_SET);
+        
+        
+        // Create a vampire:
         Set<Ability> vampireAbilities = new HashSet();
         vampireAbilities.add(abilityService.findByName("Shadows"));
+        
         from.set(from.get(Calendar.YEAR), from.get(Calendar.MONTH), from.get(Calendar.DAY_OF_MONTH), 22, 0);
         to.set(to.get(Calendar.YEAR), to.get(Calendar.MONTH), to.get(Calendar.DAY_OF_MONTH), 4, 0);
+        
         String vampireDescription = "A creature that subsists by feeding on the life essence (generally in the form of blood) of the living.";
-        createGhost("Vampire", from.getTime(), to.getTime(), vampireDescription, abandonedFactory, vampireAbilities);
+        String vampireHauntReason = "A vampire needs to feed on humans to survive.";
+        createGhost("Vampire", from.getTime(), to.getTime(), vampireDescription, vampireHauntReason, abandonedFactory, vampireAbilities);
     }
     
-    private void createGhost(String name, Date hauntFrom, Date hauntTo, String description, House house, Set<Ability> abilities) {
+    private void createGhost(String name, Date hauntFrom, Date hauntTo, String description, String hauntReason, House house, Set<Ability> abilities) {
         Ghost ghost = new Ghost();
         
         ghost.setName(name);
         ghost.setHauntFrom(hauntFrom);
         ghost.setHauntTo(hauntTo);
         ghost.setDescription(description);
+        ghost.setHauntReason(hauntReason);
         ghost.setHouse(house);
         ghost.setAbilities(abilities);
         
@@ -168,7 +190,7 @@ public class InitializerImpl implements Initializer {
         
         admin.setName(name);
         admin.setLogin(login);
-        admin.setType(Role.ADMIN);
+        admin.setRole(Role.ADMIN);
         
         personService.registerPerson(admin, password);
     }
@@ -178,7 +200,7 @@ public class InitializerImpl implements Initializer {
         
         owner.setName(name);
         owner.setLogin(login);
-        owner.setType(Role.OWNER);
+        owner.setRole(Role.OWNER);
         
         personService.registerPerson(owner, password);
         
@@ -193,7 +215,7 @@ public class InitializerImpl implements Initializer {
         
         tenant.setName(name);
         tenant.setLogin(login);
-        tenant.setType(Role.RESIDENT);
+        tenant.setRole(Role.RESIDENT);
         tenant.setHouse(house);
         
         personService.registerPerson(tenant, password);

@@ -30,13 +30,13 @@ public class Person {
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    private Role type;
+    private Role role;
 
     @NotNull
     @Column(nullable = false, unique = true)
     private String login;
 
-    private String passwordHash;
+    private String password;
 
     @ManyToOne
     private House house;
@@ -68,12 +68,12 @@ public class Person {
         this.surname = surname;
     }
 
-    public Role getType() {
-        return type;
+    public Role getRole() {
+        return role;
     }
 
-    public void setType(Role type) {
-        this.type = type;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public String getLogin() {
@@ -84,12 +84,12 @@ public class Person {
         this.login = login;
     }
 
-    public String getPasswordHash() {
-        return passwordHash;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPasswordHash(String passwordHash) {
-        this.passwordHash = passwordHash;
+    public void setPasswordHash(String password) {
+        this.password = password;
     }
 
     public House getHouse() {
@@ -124,7 +124,7 @@ public class Person {
                 + "id=" + id
                 + ", name='" + name + '\''
                 + ", surname='" + surname + '\''
-                + ", type=" + type
+                + ", type=" + role
                 + ", login='" + login + '\''
                 + '}';
     }

@@ -60,14 +60,14 @@ public class PersonServiceTest extends AbstractServiceTest {
         person1.setName("Peter");
         person1.setSurname("Maly");
         person1.setPasswordHash("sd#l1");
-        person1.setType(Role.ADMIN);
+        person1.setRole(Role.ADMIN);
 
         person2 = new Person();
         person2.setLogin("Vito998");
         person2.setName("Viktor");
         person1.setSurname("Vysoky");
         person2.setPasswordHash("gf89fd@");
-        person1.setType(Role.OWNER);
+        person1.setRole(Role.OWNER);
 
         listOfPeople = new ArrayList<>();
         listOfPeople.add(person1);
@@ -92,7 +92,7 @@ public class PersonServiceTest extends AbstractServiceTest {
         personService.registerPerson(person2, "pass");
         verify(personDao).create(person2);
 
-        person2.setType(Role.RESIDENT);
+        person2.setRole(Role.RESIDENT);
 
         personService.updatePerson(person2);
         verify(personDao).update(person2);

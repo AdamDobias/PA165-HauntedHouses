@@ -52,7 +52,7 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public boolean authenticate(Person person, String password) throws DataAccessException, IllegalArgumentException {
-        return person != null && validatePassword(password, person.getPasswordHash());
+        return person != null && validatePassword(password, person.getPassword());
     }
 
     @Override
@@ -63,7 +63,7 @@ public class PersonServiceImpl implements PersonService {
         if (acessConstraint == null || acessConstraint.isEmpty()) {
             throw new IllegalArgumentException("Neither of the access constraints can be null and the list of the constraints cannot be empty!");
         }
-        return acessConstraint.contains(person.getType());
+        return acessConstraint.contains(person.getRole());
     }
 
     @Override

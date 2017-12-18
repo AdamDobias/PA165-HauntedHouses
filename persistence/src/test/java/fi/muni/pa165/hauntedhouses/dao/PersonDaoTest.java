@@ -27,13 +27,13 @@ public class PersonDaoTest extends AbstractDaoTest {
         p1.setName("frank");
         p1.setSurname("somington");
         p1.setLogin("feri");
-        p1.setType(Role.OWNER);
+        p1.setRole(Role.OWNER);
 
         p2 = new Person();
         p2.setName("john");
         p2.setSurname("blablington");
         p2.setLogin("johnny");
-        p2.setType(Role.RESIDENT);
+        p2.setRole(Role.RESIDENT);
     }
 
     @Test
@@ -135,7 +135,7 @@ public class PersonDaoTest extends AbstractDaoTest {
         remove.setName("romie");
         remove.setSurname("removington");
         remove.setLogin("rom");
-        remove.setType(Role.RESIDENT);
+        remove.setRole(Role.RESIDENT);
 
         personDao.create(p1);
         personDao.create(p2);

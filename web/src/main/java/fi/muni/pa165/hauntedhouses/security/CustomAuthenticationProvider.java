@@ -38,9 +38,9 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             PersonDTO user = personFacade.findPersonByLogin(username);
             
             List<GrantedAuthority> grantedAuths = new ArrayList<>();
-            grantedAuths.add(new SimpleGrantedAuthority("ROLE_" + user.getRole()));
+            grantedAuths.add(new SimpleGrantedAuthority("ROLE_" + user.getRole().toString()));
 
-            return new UsernamePasswordAuthenticationToken(user, password, grantedAuths);
+            return new UsernamePasswordAuthenticationToken(username, password, grantedAuths);
         } else {
             throw new BadCredentialsException("Invalid password.");
         }
