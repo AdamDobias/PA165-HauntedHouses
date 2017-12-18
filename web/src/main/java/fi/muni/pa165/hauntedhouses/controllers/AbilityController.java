@@ -63,8 +63,11 @@ public class AbilityController {
         }
     }
 
-    @RequestMapping(value = ApiContract.Ability.ID, method = RequestMethod.DELETE)
+    @RequestMapping(value = ApiContract.Ability.DELETE, method = RequestMethod.DELETE)
     public void deleteAbility(@PathVariable(ApiContract.Ability.PATH_ID) Long id) {
+        
+        System.out.println("fi.muni.pa165.hauntedhouses.controllers.AbilityController.deleteAbility()" + id);
+        
         try {
             abilityFacade.deleteAbility(id);
         } catch (DataAccessException e) {

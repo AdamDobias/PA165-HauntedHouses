@@ -9,6 +9,7 @@ import fi.muni.pa165.hauntedhouses.exceptions.ResourceConflict;
 import fi.muni.pa165.hauntedhouses.exceptions.ResourceNotFound;
 import fi.muni.pa165.hauntedhouses.exceptions.ResourceNotValid;
 import fi.muni.pa165.hauntedhouses.facade.HouseFacade;
+import fi.muni.pa165.hauntedhouses.facade.PersonFacade;
 
 import java.util.Collections;
 import java.util.List;
@@ -37,8 +38,11 @@ public class HouseController {
 
     @Inject
     private HouseFacade houseFacade;
+    
+    @Inject
+    private PersonFacade personFacade;
 
-    @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = ApiContract.House.CREATE, method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public final void buildHouse(@Valid @RequestBody HouseCreateDTO house, BindingResult result) {
         if (result.hasErrors()) {
@@ -77,6 +81,17 @@ public class HouseController {
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public final List<HouseDTO> getAllHouses() {
         List<HouseDTO> result = houseFacade.findAllHouses();
+
+        if (result == null) {
+            result = Collections.emptyList();
+        }
+
+        return result;
+    }
+    
+    @RequestMapping(value = ApiContract.House.PEOPLE, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public final List<PersonDTO> getAllPeople() {
+        List<PersonDTO> result = personFacade.getAllPeople(); ;
 
         if (result == null) {
             result = Collections.emptyList();

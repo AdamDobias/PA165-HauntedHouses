@@ -21,20 +21,36 @@ hauntedHousesControllers.controller('houseDetailCtrl', function ($scope, $routeP
 
 // unfinished, doesn't work:
 // ---------------
-hauntedHousesControllers.controller('newHouseCtrl', function ($scope, $rootScope, $location, houseFactory) {
-    $scope.house = {
-        'name': '',
-        'address': ''
-    };
-    $scope.create = function() {
-        houseFactory.createHouse($scope.house,
-            function (response) {
-                $scope.house = response.data;
-                //$location.path("/houses");
-            },
-            $rootScope.unsuccessfulResponse
-        );
-    };
+hauntedHousesControllers.controller('newHouseCtrl',
+    function ($scope, $routeParams, $http, $location, $rootScope, houseFactory) {        
+        
+        houseFactory.getAllPeople(
+                function (response) {
+                    $scope.persons = response.data;
+                },
+                $rootScope.unsuccessfulResponse
+                );
+        
+        $scope.house = {
+            'name': '',
+            'address': '',
+            'ownerId': ''
+            
+        };
+
+        $scope.create = function (house) {
+             $http({
+                method: 'POST',
+                url: '/pa165/rest/house/create',
+                data: house
+            }).then(function success(response) {
+                //change view to list of products
+                $location.path("/houses");
+            }, function error(response) {
+                $rootScope.unsuccessfulResponse;
+            });
+        };
+   
 });
 // ---------------
 
@@ -65,7 +81,7 @@ hauntedHousesControllers.controller('ghostDetailCtrl', function ($scope, $routeP
  * ABILITIES 
  */
 
-hauntedHousesControllers.controller('abilitiesCtrl', function ($scope, $http, $rootScope, abilityFactory) {
+hauntedHousesControllers.controller('abilitiesCtrl', function ($scope, $http, $location, $rootScope, abilityFactory) {
     abilityFactory.getAllAbilities(
             function (response) {
                 $scope.abilities = response.data;
@@ -73,17 +89,17 @@ hauntedHousesControllers.controller('abilitiesCtrl', function ($scope, $http, $r
             $rootScope.unsuccessfulResponse
             );
     $scope.deleteAbility = function (ability) {
-        $http.delete("/pa165/rest/ability/"+ability.id).then(
-            function success(response) {
+        $http.delete('/pa165/rest/ability/delete/{id}'.replace("{id}", ability.id))
+            .then(function success(response) {
                 abilityFactory.getAllAbilities(
                     function (response) {
                         $scope.abilities = response.data;
                     },
                     $rootScope.unsuccessfulResponse
                     );
-            },
-            $rootScope.unsuccessfulResponse
-        );
+            }, function error(response) {
+                $rootScope.unsuccessfulResponse;
+            });
     };
     
 });
@@ -113,7 +129,7 @@ hauntedHousesControllers.controller('newAbilityCtrl',
         $scope.ability = {
             'name': '',
             'description': '',
-            'type': $scope.toopes[1] //this shit is causing some problems, not when creating the enum in controller
+            'type': '' //this shit is causing some problems, not when creating the enum in controller
         };
 
         $scope.create = function (ability) {

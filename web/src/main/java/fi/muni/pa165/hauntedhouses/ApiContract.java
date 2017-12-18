@@ -8,11 +8,11 @@ public abstract class ApiContract {
         public static final String BASE = "/ability";
         public static final String ID = "/{id}";
         public static final String PATH_ID = "id";
-        public static final String GHOSTS = "/{id}/ghosts";
+        public static final String GHOSTS = "/ghosts/{id}";
         public static final String TYPES = "/types";
         public static final String CREATE = "/create";
-        
-        
+        public static final String DELETE = "/delete/{id}";
+       
     }
 
     public static final class Ghost {
@@ -30,6 +30,9 @@ public abstract class ApiContract {
         public static final String GHOSTS = "/{id}/ghosts";
         public static final String TENANTS = "/{id}/tenants";
         public static final String OWNER = "/{id}/owner";
+        public static final String CREATE = "/create";
+        public static final String PEOPLE = "/people";
+        
     }
 
     public static final class Person {

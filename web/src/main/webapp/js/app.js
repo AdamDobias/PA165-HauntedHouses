@@ -67,12 +67,12 @@ module.run(function ($rootScope, $location, $window, loggedUserFactory) {
             $location.path("/forbidden");
         } else if (response.status === 401) {
             $window.location.href = "login.html";
-        } else if (response.status === 400 || response.status === 409) {
-            document.getElementById('errorOutput').style.display = 'block';
-            setTimeout(function () {
-                document.getElementById('errorOutput').style.display = 'none';
-            }, 3000);
-        }
+        }// else if (response.status === 400 || response.status === 409) {
+            //document.getElementById('errorOutput').style.display = 'block';
+//            setTimeout(function () {
+//                document.getElementById('errorOutput').style.display = 'none';
+//            }, 3000);
+        //}
     };
 
 });

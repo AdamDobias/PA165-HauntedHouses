@@ -14,6 +14,7 @@ import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
 
 import fi.muni.pa165.hauntedhouses.enums.AbilityType;
+import javax.persistence.CascadeType;
 
 /**
  * @author Adam Dobiáš, 451044
@@ -35,7 +36,8 @@ public class Ability {
     @NotNull
     private AbilityType type;
 
-    @ManyToMany(mappedBy = "abilities")
+    @ManyToMany(mappedBy = "abilities",
+            cascade = CascadeType.ALL)
     private Set<Ghost> ghosts = new HashSet<>();
 
     // Constructors:

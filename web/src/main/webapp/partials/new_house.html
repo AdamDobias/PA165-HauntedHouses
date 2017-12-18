@@ -9,6 +9,7 @@
 
         <form name="form" novalidate class="form-horizontal">
 
+            <!--NAME-->
             <div class="form-group" ng-class="{'has-error': !(form.name.$valid)}">
                 <label for="name" class="col-sm-2 control-label">Name</label>
                 <div class="col-sm-10">
@@ -18,16 +19,37 @@
                 </div>
             </div>
 
+            <!--ADDRESS-->
             <div class="form-group" ng-class="{'has-error': !(form.address.$valid)}">
                 <label for="address" class="col-sm-2 control-label">Address</label>
                 <div class="col-sm-10">
                     <input placeholder="address" id="address" type="text" ng-minlength="15" name="address" class="form-control" ng-model="house.address" required/>
                     <p class="help-block" ng-show="form.address.$error.required">The field <i>address</i> is required.</p>
-                    <p class="help-block" ng-show="form.address.$error.minlength">The address must be at least 15 characters long.</p>
+                    <p class="help-block" ng-show="form.address.$error.minlength">The address must be at least 10 characters long.</p>
                 </div>
             </div>
 
-            <button ng-disabled="!form.$valid" ng-click="create()" class="btn btn-primary" type="submit" >Create</button>
+            <!--HISTORY-->
+            <div class="form-group" ng-class="{'has-error': !(form.history.$valid)}">
+                <label for="history" class="col-sm-2 control-label">history</label>
+                <div class="col-sm-10">
+                    <input placeholder="history" id="history" type="text" ng-minlength="0" name="history" class="form-control" ng-model="house.history" />
+                </div>
+            </div>
+
+            
+            <!--OWNER-->
+            <div class="form-group">
+                <label for="owner" class="col-sm-2 control-label">Owner</label>
+                <div class="col-sm-10">
+                    <select id="owner" name="owner" class="form-control" ng-model="house.ownerId" required>
+                            <option ng-repeat="owner in persons" value="{{owner.id}}">{{owner.name}}</option>
+                    </select>
+                    <p class="help-block" ng-show="form.owner.$error.required">The field <i>owner</i> is required.</p>    
+                </div>
+            </div>
+            
+            <button ng-disabled="!form.$valid" ng-click="create(house)" class="btn btn-primary" type="submit" >Create</button>
         </form>
 
     </body>

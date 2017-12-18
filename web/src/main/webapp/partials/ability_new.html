@@ -6,18 +6,7 @@
     </head>
     <body>
         <h1>New ability form</h1>
-        
-        {{types}}
-        {{toopes}}
-        {{ability}}
-        {{ability.name}}
-        {{ability.description}}
-        {{ability.type}}
-        
-        
-        
-        
-        
+
         <form name="form" novalidate class="form-horizontal">
 
             <div class="form-group" ng-class="{'has-error': !(form.name.$valid)}">
@@ -41,8 +30,9 @@
                 <label for="type" class="col-sm-2 control-label">Type</label>
                 <div class="col-sm-10">
                     <select id="color" name="type" class="form-control" ng-model="ability.type" required>
-                            <option ng-repeat="type in toopes" value="{{type}}">{{type}}</option>
+                            <option ng-repeat="type in types" value="{{type}}">{{type}}</option>
                     </select>
+                    <p class="help-block" ng-show="form.type.$error.required">The field <i>type</i> is required.</p>    
                 </div>
             </div>
            

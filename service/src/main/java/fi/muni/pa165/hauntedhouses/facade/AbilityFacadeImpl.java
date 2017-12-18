@@ -46,9 +46,14 @@ public class AbilityFacadeImpl implements AbilityFacade {
 
     @Override
     public void deleteAbility(Long id) {
+        
         log.debug("Deleting the ability with the ID {}", id);
+        /*
         Ability ability = beanMappingService.mapTo(findById(id), Ability.class);
         abilityService.deleteAbility(ability);
+*/
+        //just a workaround
+        abilityService.deleteAbility(abilityService.findById(id));
     }
 
     @Override
