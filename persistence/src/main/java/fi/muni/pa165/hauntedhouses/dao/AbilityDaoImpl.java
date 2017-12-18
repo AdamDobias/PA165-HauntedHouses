@@ -1,6 +1,9 @@
 package fi.muni.pa165.hauntedhouses.dao;
 
 import fi.muni.pa165.hauntedhouses.entity.Ability;
+import fi.muni.pa165.hauntedhouses.enums.AbilityType;
+import java.util.Arrays;
+import java.util.Collections;
 
 import java.util.List;
 
@@ -56,4 +59,8 @@ public class AbilityDaoImpl implements AbilityDao {
         return em.createQuery("SELECT a FROM Ability a", Ability.class).getResultList();
     }
 
+    @Override
+    public List<AbilityType> getAbilityTypes() {
+       return Collections.unmodifiableList(Arrays.asList(AbilityType.values()));
+    }
 }

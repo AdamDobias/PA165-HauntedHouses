@@ -1,6 +1,7 @@
 package fi.muni.pa165.hauntedhouses.dao;
 
 import fi.muni.pa165.hauntedhouses.entity.Ability;
+import fi.muni.pa165.hauntedhouses.enums.AbilityType;
 
 import java.util.List;
 
@@ -54,4 +55,10 @@ public interface AbilityDao {
      */
     public List<Ability> findAll();
 
+    /**
+     * returns list of all available ability types
+     * @return 
+     */
+    public List<AbilityType> getAbilityTypes();
+    
 }

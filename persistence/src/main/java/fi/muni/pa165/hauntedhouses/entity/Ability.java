@@ -44,7 +44,11 @@ public class Ability {
     }
 
     // Getters and setters:
-    
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+      
     public Long getId() {
         return id;
     }
@@ -89,6 +93,16 @@ public class Ability {
         this.ghosts.remove(ghost);
     }
 
+    @Override
+    public String toString() {
+        return "Ability{" + "id=" + id + 
+                ", name=" + name + 
+                ", description=" + description +
+                ", type=" + type +  '}';
+    }
+
+    
+    
     @Override
     public int hashCode() {
         final int prime = 31;

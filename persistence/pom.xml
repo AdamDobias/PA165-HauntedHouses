@@ -14,12 +14,13 @@
     <name>Haunted Houses: Persistence Layer</name>
 
     <dependencies>
-        
+        <!--
         <dependency>
             <groupId>fi.muni.pa165</groupId>
             <artifactId>haunted-houses-api</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
+        -->
         
         <!-- Spring -->
         <dependency>

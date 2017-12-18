@@ -20,6 +20,11 @@
             <artifactId>haunted-houses-persistence</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
+        <dependency>
+            <groupId>fi.muni.pa165</groupId>
+            <artifactId>haunted-houses-api</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
         <!-- Testing -->
         <dependency>
             <groupId>org.assertj</groupId>

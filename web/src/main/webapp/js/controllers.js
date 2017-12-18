@@ -57,13 +57,35 @@ hauntedHousesControllers.controller('ghostDetailCtrl', function ($scope, $routeP
             );
 });
 
-hauntedHousesControllers.controller('abilitiesCtrl', function ($scope, $rootScope, abilityFactory) {
+/**
+ * ABILITIES
+ * ABILITIES
+ * ABILITIES
+ * ABILITIES
+ * ABILITIES 
+ */
+
+hauntedHousesControllers.controller('abilitiesCtrl', function ($scope, $http, $rootScope, abilityFactory) {
     abilityFactory.getAllAbilities(
             function (response) {
                 $scope.abilities = response.data;
             },
             $rootScope.unsuccessfulResponse
             );
+    $scope.deleteAbility = function (ability) {
+        $http.delete("/pa165/rest/ability/"+ability.id).then(
+            function success(response) {
+                abilityFactory.getAllAbilities(
+                    function (response) {
+                        $scope.abilities = response.data;
+                    },
+                    $rootScope.unsuccessfulResponse
+                    );
+            },
+            $rootScope.unsuccessfulResponse
+        );
+    };
+    
 });
 
 hauntedHousesControllers.controller('abilityDetailCtrl', function ($scope, $routeParams, $rootScope, abilityFactory) {
@@ -74,4 +96,38 @@ hauntedHousesControllers.controller('abilityDetailCtrl', function ($scope, $rout
             },
             $rootScope.unsuccessfulResponse
             );
+});
+
+hauntedHousesControllers.controller('newAbilityCtrl',
+    function ($scope, $routeParams, $http, $location, $rootScope, abilityFactory) {
+
+        abilityFactory.getAbilityTypes(
+                function (response) {
+                    $scope.types = response.data;
+                },
+                $rootScope.unsuccessfulResponse
+                );
+        
+        $scope.toopes = ['NOISE', 'FIRE', 'DARKNESS', 'GORE'];
+        
+        $scope.ability = {
+            'name': '',
+            'description': '',
+            'type': $scope.toopes[1] //this shit is causing some problems, not when creating the enum in controller
+        };
+
+        $scope.create = function (ability) {
+             $http({
+                method: 'POST',
+                url: '/pa165/rest/ability/create',
+                data: ability
+            }).then(function success(response) {
+                //change view to list of products
+                $location.path("/abilities");
+            }, function error(response) {
+                $rootScope.unsuccessfulResponse;
+            });
+        };
+   
+
 });

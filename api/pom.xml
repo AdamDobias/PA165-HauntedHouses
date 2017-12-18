@@ -17,6 +17,11 @@
     <dependencies>
         <!-- Validation annotations for bean properties: -->
         <dependency>
+            <groupId>fi.muni.pa165</groupId>
+            <artifactId>haunted-houses-persistence</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
         </dependency>

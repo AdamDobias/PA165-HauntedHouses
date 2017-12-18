@@ -40,11 +40,11 @@ public class AbilityDTO {
         return description;
     }
 
-    public void setAbilityType(AbilityType type) {
+    public void setType(AbilityType type) {
         this.type = type;
     }
 
-    public AbilityType getAbilityType() {
+    public AbilityType getType() {
         return type;
     }
 
@@ -71,7 +71,7 @@ public class AbilityDTO {
 
         if (getName() != null ? !getName().equals(other.getName()) : other.getName() != null) return false;
         
-        return getAbilityType() != null ? getAbilityType().equals(other.getAbilityType()) : other.getAbilityType() == null;
+        return getType() != null ? getType().equals(other.getType()) : other.getType() == null;
     }
 
     @Override

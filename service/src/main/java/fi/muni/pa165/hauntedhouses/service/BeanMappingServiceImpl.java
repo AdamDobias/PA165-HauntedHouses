@@ -26,11 +26,6 @@ public class BeanMappingServiceImpl implements BeanMappingService {
     }
 
     @Override
-    public <T> Set<T> mapTo(Set<?> objects, Class<T> mapToClass) {
-        return objects.stream().map(o -> mapper.map(o, mapToClass)).collect(Collectors.toSet());
-    }
-
-    @Override
     public <T> T mapTo(Object u, Class<T> mapToClass) {
         return mapper.map(u, mapToClass);
     }

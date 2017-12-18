@@ -1,6 +1,7 @@
 package fi.muni.pa165.hauntedhouses.service;
 
 import fi.muni.pa165.hauntedhouses.entity.Ability;
+import fi.muni.pa165.hauntedhouses.enums.AbilityType;
 
 import java.util.List;
 
@@ -69,4 +70,6 @@ public interface AbilityService {
      */
     void deleteAbility(Ability ability) throws DataAccessException, IllegalArgumentException;
 
+    List<AbilityType> getAbilityTypes();
+    
 }

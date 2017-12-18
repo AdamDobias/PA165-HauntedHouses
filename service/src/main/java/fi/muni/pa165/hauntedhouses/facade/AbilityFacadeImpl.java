@@ -2,6 +2,7 @@ package fi.muni.pa165.hauntedhouses.facade;
 
 import fi.muni.pa165.hauntedhouses.dto.AbilityDTO;
 import fi.muni.pa165.hauntedhouses.entity.Ability;
+import fi.muni.pa165.hauntedhouses.enums.AbilityType;
 import fi.muni.pa165.hauntedhouses.service.AbilityService;
 import fi.muni.pa165.hauntedhouses.service.BeanMappingService;
 
@@ -71,4 +72,8 @@ public class AbilityFacadeImpl implements AbilityFacade {
         return abilities == null ? null : beanMappingService.mapTo(abilities, AbilityDTO.class);
     }
     
+    @Override
+    public List<AbilityType> getAbilityTypes() {
+        return abilityService.getAbilityTypes();
+    }
 }

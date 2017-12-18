@@ -15,8 +15,27 @@ hauntedHousesServices.factory('abilityFactory', ['$http',
             return $http.get(urlAbility + "/" + id).then(success, error);
         };
 
+        dataFactory.getAbilityTypes = function (success, error) {
+            return $http.get(urlAbility + "/types").then(success, error);
+        };
+
         return dataFactory;
+        
+        dataFactory.createAbility = function (ability, success, error) {
+            return $http({
+                method: 'POST',
+                url: urlAbility+"/create",
+                data: ability
+            }).then(success, error);
+        };
+        
+        dataFactory.deleteAbility = function (abilityId, success, error) {
+            return $http.delete(urlAbilityId.replace("{id}", abilityId)).then(success, error);
+        };
+    
     }
+    
+    
 ]);
 
 hauntedHousesServices.factory('houseFactory', ['$http',

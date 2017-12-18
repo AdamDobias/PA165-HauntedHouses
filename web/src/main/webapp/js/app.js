@@ -30,10 +30,15 @@ module.config(function ($routeProvider) {
                 templateUrl: 'partials/abilities.html',
                 controller: 'abilitiesCtrl'
             })
+            .when('/abilities/newability', {
+                templateUrl: 'partials/ability_new.html',
+                controller: 'newAbilityCtrl'
+            })
             .when('/abilities/:id', {
                 templateUrl: 'partials/ability_detail.html',
                 controller: 'abilityDetailCtrl'
             })
+            
             .when('/forbidden', {
                 templateUrl: 'partials/forbidden.html'
             })

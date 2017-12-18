@@ -1,6 +1,8 @@
 package fi.muni.pa165.hauntedhouses.facade;
 
 import fi.muni.pa165.hauntedhouses.dto.AbilityDTO;
+import fi.muni.pa165.hauntedhouses.enums.AbilityType;
+import fi.muni.pa165.hauntedhouses.enums.OBSOLETEAbilityType;
 
 import java.util.List;
 
@@ -53,4 +55,6 @@ public interface AbilityFacade {
      * @return list of all abilities
      */
     List<AbilityDTO> findAllAbilities();
+    
+    List<AbilityType> getAbilityTypes();
 }

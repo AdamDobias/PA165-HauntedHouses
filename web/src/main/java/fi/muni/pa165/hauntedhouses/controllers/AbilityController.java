@@ -3,11 +3,15 @@ package fi.muni.pa165.hauntedhouses.controllers;
 import fi.muni.pa165.hauntedhouses.ApiContract;
 import fi.muni.pa165.hauntedhouses.dto.AbilityDTO;
 import fi.muni.pa165.hauntedhouses.dto.GhostDTO;
+import fi.muni.pa165.hauntedhouses.entity.Ability;
+import fi.muni.pa165.hauntedhouses.enums.AbilityType;
 import fi.muni.pa165.hauntedhouses.exceptions.ResourceConflict;
 import fi.muni.pa165.hauntedhouses.exceptions.ResourceNotFound;
 import fi.muni.pa165.hauntedhouses.exceptions.ResourceNotValid;
 import fi.muni.pa165.hauntedhouses.facade.AbilityFacade;
 import fi.muni.pa165.hauntedhouses.facade.GhostFacade;
+import fi.muni.pa165.hauntedhouses.service.AbilityService;
+import java.util.Arrays;
 
 import java.util.Collections;
 import java.util.List;
@@ -43,7 +47,7 @@ public class AbilityController {
     @Inject
     GhostFacade ghostFacade;
 
-    @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = ApiContract.Ability.CREATE, method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public void createAbility(@Valid @RequestBody AbilityDTO ability, BindingResult result) {
         if (result.hasErrors()) {
@@ -59,8 +63,8 @@ public class AbilityController {
         }
     }
 
-    @RequestMapping(value = ID, method = RequestMethod.DELETE)
-    public void deleteAbility(@PathVariable(PATH_ID) Long id) {
+    @RequestMapping(value = ApiContract.Ability.ID, method = RequestMethod.DELETE)
+    public void deleteAbility(@PathVariable(ApiContract.Ability.PATH_ID) Long id) {
         try {
             abilityFacade.deleteAbility(id);
         } catch (DataAccessException e) {
@@ -82,7 +86,7 @@ public class AbilityController {
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<AbilityDTO> getAllAbilities() {
         List<AbilityDTO> abilities = abilityFacade.findAllAbilities();
-
+        
         return abilities == null ? Collections.emptyList() : abilities;
     }
     
@@ -100,6 +104,14 @@ public class AbilityController {
         
         return ghostsWithAbility;
     }
+    
+    @RequestMapping(value = ApiContract.Ability.TYPES, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<AbilityType> getAbilityTypes() {
+        List<AbilityType> types = abilityFacade.getAbilityTypes();
+        return types == null ? Collections.emptyList() : types;
+        
+    }
+    
 
     // TODO update methods - see how pages will turn out
     // TODO pages for displaying abilities, creating and updating (these two will be basically the same)

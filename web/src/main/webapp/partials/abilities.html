@@ -7,17 +7,21 @@
     </head>
     
     <body>
-        
+        <a href="#!/abilities/newability" class="btn btn-primary">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+            Create Ability
+        </a>
         <h3>List of abilities</h3>
 
         <br>
-
+        
         <table class="table">
             <thead class="thead-inverse">
                 <tr>
                     <th></th>
                     <th>NAME</th>
                     <th>DESCRIPTION</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -25,6 +29,9 @@
                     <td scope="row">{{ability.id}}</td>
                     <td scope="row"><a ng-href="#!/abilities/{{ability.id}}">{{ability.name}}</a></td>
                     <td scope="row">{{ability.description}}</td>
+                    <td>
+                        <button ng-click="deleteAbility(ability)" type="submit" class="btn btn-primary">Delete</button>
+                    </td>
                 </tr>
             </tbody>
         </table>

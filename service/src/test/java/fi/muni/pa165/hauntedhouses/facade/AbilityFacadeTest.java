@@ -78,7 +78,7 @@ public class AbilityFacadeTest extends AbstractFacadeTest {
         verify(abilityService).createAbility(ability);
         verify(beanMappingService).mapTo(abilityDTO, Ability.class);
 
-        abilityDTO.setAbilityType(AbilityType.NOISE);
+        abilityDTO.setType(AbilityType.NOISE);
 
         abilityFacade.updateAbility(abilityDTO);
         verify(abilityService).updateAbility(ability);
