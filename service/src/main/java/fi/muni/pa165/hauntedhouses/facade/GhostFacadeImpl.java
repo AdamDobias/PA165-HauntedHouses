@@ -6,6 +6,7 @@ import fi.muni.pa165.hauntedhouses.dto.HouseDTO;
 import fi.muni.pa165.hauntedhouses.entity.Ability;
 import fi.muni.pa165.hauntedhouses.entity.Ghost;
 import fi.muni.pa165.hauntedhouses.entity.House;
+import fi.muni.pa165.hauntedhouses.service.AbilityService;
 import fi.muni.pa165.hauntedhouses.service.BeanMappingService;
 import fi.muni.pa165.hauntedhouses.service.GhostService;
 
@@ -31,6 +32,10 @@ public class GhostFacadeImpl implements GhostFacade {
 
     @Inject
     private GhostService ghostService;
+    
+    //part of the workaround
+    @Inject
+    private AbilityService abilityService;
 
     @Inject
     private BeanMappingService beanMappingService;
@@ -80,8 +85,11 @@ public class GhostFacadeImpl implements GhostFacade {
     @Override
     public List<GhostDTO> findByAbility(AbilityDTO abilityDTO) {
         log.debug("Finding all ghosts with the ability {}", abilityDTO);
-        Ability ability = beanMappingService.mapTo(abilityDTO, Ability.class);
-        return beanMappingService.mapTo(ghostService.findByAbility(ability), GhostDTO.class);
+        //another workaround
+        //this is the original
+        //Ability ability = beanMappingService.mapTo(abilityDTO, Ability.class);
+        
+        return beanMappingService.mapTo(ghostService.findByAbility(abilityService.findById(abilityDTO.getId())), GhostDTO.class);
     }
 
     @Override

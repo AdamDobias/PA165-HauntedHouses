@@ -18,7 +18,12 @@ hauntedHousesServices.factory('abilityFactory', ['$http',
         dataFactory.getAbilityTypes = function (success, error) {
             return $http.get(urlAbility + "/types").then(success, error);
         };
-
+        
+        dataFactory.getGhostsOfAbility = function (id, success, error) {
+            return $http.get(urlAbility + "/" + id + "/ghosts")
+                    .then(success, error);
+        };
+        
         return dataFactory;
         
     }

@@ -8,10 +8,15 @@ public abstract class ApiContract {
         public static final String BASE = "/ability";
         public static final String ID = "/{id}";
         public static final String PATH_ID = "id";
-        public static final String GHOSTS = "/ghosts/{id}";
+        public static final String GHOSTS = "/{id}/ghosts";
         public static final String TYPES = "/types";
         public static final String CREATE = "/create";
+        public static final String UPDATE = "/update";        
         public static final String DELETE = "/delete/{id}";
+        public static final String EMPTY_SEARCH = "/search";
+        public static final String SEARCH = "/search/{searchText}"; 
+        public static final String PATH_SEARCH = "searchText"; 
+        
        
     }
 

@@ -102,6 +102,21 @@ hauntedHousesControllers.controller('abilitiesCtrl', function ($scope, $http, $l
             });
     };
     
+    $scope.find = function (searchText) {
+        $http.get('/pa165/rest/ability/search/{searchText}'.replace("{searchText}", searchText))
+            .then(function success(response) {
+                ab = response.data;
+                if ( ab.constructor === Array ) {
+                    $scope.abilities = ab;                    
+                } else {
+                    $scope.abilities = [];
+                    $scope.abilities.push(ab);
+                }
+            }, function error(response) {
+                $rootScope.unsuccessfulResponse;
+            });
+        };
+    
 });
 
 hauntedHousesControllers.controller('abilityDetailCtrl', function ($scope, $routeParams, $rootScope, abilityFactory) {
@@ -112,6 +127,14 @@ hauntedHousesControllers.controller('abilityDetailCtrl', function ($scope, $rout
             },
             $rootScope.unsuccessfulResponse
             );
+    abilityFactory.getGhostsOfAbility(
+            $routeParams.id,
+            function (response) {
+                $scope.ghosts = response.data;            
+            },
+            $rootScope.unsuccessfulResponse            
+            );
+    
 });
 
 hauntedHousesControllers.controller('newAbilityCtrl',
@@ -124,7 +147,7 @@ hauntedHousesControllers.controller('newAbilityCtrl',
                 $rootScope.unsuccessfulResponse
                 );
         
-        $scope.toopes = ['NOISE', 'FIRE', 'DARKNESS', 'GORE'];
+        //$scope.toopes = ['NOISE', 'FIRE', 'DARKNESS', 'GORE'];
         
         $scope.ability = {
             'name': '',
@@ -138,12 +161,41 @@ hauntedHousesControllers.controller('newAbilityCtrl',
                 url: '/pa165/rest/ability/create',
                 data: ability
             }).then(function success(response) {
-                //change view to list of products
+                //change view to list of abilities
                 $location.path("/abilities");
             }, function error(response) {
                 $rootScope.unsuccessfulResponse;
             });
         };
-   
+});
 
+hauntedHousesControllers.controller('updateAbilityCtrl',
+    function ($scope, $routeParams, $http, $location, $rootScope, abilityFactory) {
+        abilityFactory.getAbilityTypes(
+                function (response) {
+                    $scope.types = response.data;
+                },
+                $rootScope.unsuccessfulResponse
+                );
+        
+        abilityFactory.getAbility(
+            $routeParams.id,
+            function (response) {
+                $scope.ability = response.data;
+            },
+            $rootScope.unsuccessfulResponse
+            );
+        //$scope.upd.id = $scope.ability.id;
+        $scope.update = function (ab) {
+             $http({
+                method: 'PUT',
+                url: '/pa165/rest/ability/update',
+                data: ab
+            }).then(function success(response) {
+                //change view to list of abilities
+                $location.path("/abilities");
+            }, function error(response) {
+                $rootScope.unsuccessfulResponse;
+            });
+        };
 });

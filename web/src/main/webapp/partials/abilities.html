@@ -12,12 +12,34 @@
 
         <p>Log in first to be able to manage this section.</p>
         
+        <div class="row">
+            
+            <form name="form" novalidate class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-sm-10">
+                        <input placeholder="Search" id="searchText" type="text" ng-minlength="0" name="searchText" class="form-control" ng-model="searchText"/>
+                    </div>
+                </div>
+
+                <button ng-click="find(searchText)" type="submit" class="btn btn-primary">Search</button>
+            </form>
+        </div><!-- /.row -->
+        <!-- ng-model="searchText"
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search..">
+            <span class="input-group-btn">
+              <button class="btn btn-default" type="button">Go!</button>
+            </span>
+        </div><!-- /input-group -->
+      
+      
         <table class="table">
             <thead class="thead-inverse">
                 <tr>
                     <th></th>
                     <th>NAME</th>
                     <th>DESCRIPTION</th>
+                    <th></th>
                     <th></th>
                 </tr>
             </thead>
@@ -28,6 +50,12 @@
                     <td scope="row">{{ability.description}}</td>
                     <td>
                         <button ng-click="deleteAbility(ability)" type="submit" class="btn btn-primary">Delete</button>
+                    </td>
+                    <td>
+                        <a href="#!/abilities/update/{{ability.id}}" class="btn btn-primary">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                            Update
+                        </a>
                     </td>
                 </tr>
             </tbody>

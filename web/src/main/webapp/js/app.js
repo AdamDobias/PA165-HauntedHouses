@@ -38,6 +38,10 @@ module.config(function ($routeProvider) {
                 templateUrl: 'partials/ability_detail.html',
                 controller: 'abilityDetailCtrl'
             })
+            .when('/abilities/update/:id', {
+                templateUrl: 'partials/ability_update.html',
+                controller: 'updateAbilityCtrl'
+            })
             
             .when('/forbidden', {
                 templateUrl: 'partials/forbidden.html'

@@ -62,11 +62,25 @@ public class AbilityController {
             throw new ResourceNotFound();
         }
     }
+    
+    @RequestMapping(value = ApiContract.Ability.UPDATE, method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.CREATED)
+    public void updateAbility(@Valid @RequestBody AbilityDTO ability, BindingResult result) {
+        if (result.hasErrors()) {
+            throw new ResourceNotValid();
+        }
+
+        try {
+            abilityFacade.updateAbility(ability);
+        } catch (DataAccessException e) {
+            throw new ResourceConflict();
+        } catch (IllegalArgumentException e) {
+            throw new ResourceNotFound();
+        }
+    }
 
     @RequestMapping(value = ApiContract.Ability.DELETE, method = RequestMethod.DELETE)
     public void deleteAbility(@PathVariable(ApiContract.Ability.PATH_ID) Long id) {
-        
-        System.out.println("fi.muni.pa165.hauntedhouses.controllers.AbilityController.deleteAbility()" + id);
         
         try {
             abilityFacade.deleteAbility(id);
@@ -86,8 +100,9 @@ public class AbilityController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = {"", ApiContract.Ability.EMPTY_SEARCH}, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<AbilityDTO> getAllAbilities() {
+        System.out.println("fi.muni.pa165.hauntedhouses.controllers.AbilityController.getAllAbilities()");
         List<AbilityDTO> abilities = abilityFacade.findAllAbilities();
         
         return abilities == null ? Collections.emptyList() : abilities;
@@ -113,6 +128,19 @@ public class AbilityController {
         List<AbilityType> types = abilityFacade.getAbilityTypes();
         return types == null ? Collections.emptyList() : types;
         
+    }
+    
+    @RequestMapping(value = ApiContract.Ability.SEARCH, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public AbilityDTO findByName(@PathVariable(ApiContract.Ability.PATH_SEARCH) String searchText) {
+        System.out.println("fi.muni.pa165.hauntedhouses.controllers.AbilityController.findByName()");
+        System.out.println("finding by name: "+searchText);
+        AbilityDTO result = abilityFacade.findByName(searchText);
+        System.err.println(result);
+        if (result != null) {
+            return result;
+        } else {
+            throw new ResourceNotFound();
+        }        
     }
     
 
